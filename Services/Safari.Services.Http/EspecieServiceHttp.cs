@@ -18,7 +18,22 @@ namespace Safari.Services.Http
         [HttpPost][Route("Agregar")]
         public AgregarEspecieResponse Agregar(AgregarEspecieRequest request)
         {
-            return null;
+            try
+            {
+                var response = new AgregarEspecieResponse();
+                var bc = new EspecieComponent();
+                response.Result = bc.Agregar(request.Especie);
+                return response;
+            }
+            catch (Exception ex)
+            {
+                var httpError = new HttpResponseMessage()
+                {
+                    StatusCode = (HttpStatusCode)422, // UNPROCESSABLE ENTITY
+                    ReasonPhrase = ex.Message
+                };
+                throw new HttpResponseException(httpError);
+            }
         }
 
         [HttpGet]
