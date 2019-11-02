@@ -25,7 +25,27 @@ namespace Safari.Business
             var especieDAC = new EspecieDAC();
             result = especieDAC.Read();
             return result;
+        }
 
+        public Especie ListarPorId(int id)
+        {
+            Especie result = default(Especie);
+
+            var especieDAC = new EspecieDAC();
+            result = especieDAC.ReadBy(id);
+            return result;
+        }
+
+        public void Editar(Especie especie)
+        {
+            var especieDAC = new EspecieDAC();
+            especieDAC.Update(especie);
+        }
+
+        public void Borrar(Especie especie)
+        {
+            var especieDAC = new EspecieDAC();
+            especieDAC.Delete(especie.Id);
         }
     }
 }

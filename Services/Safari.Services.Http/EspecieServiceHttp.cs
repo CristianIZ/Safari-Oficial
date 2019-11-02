@@ -12,7 +12,7 @@ using System.Web.Http;
 
 namespace Safari.Services.Http
 {
-        [RoutePrefix("api/Especie")]
+    [RoutePrefix("api/Especie")]
     public class EspecieServiceHttp : ApiController
     {
         [HttpPost][Route("Agregar")]
@@ -45,6 +45,78 @@ namespace Safari.Services.Http
                 var response = new ListarTodosEspecieResponse();
                 var bc = new EspecieComponent();
                 response.Result = bc.ListarTodos();
+
+                return response;
+            }
+            catch (Exception ex)
+            {
+                var httpError = new HttpResponseMessage()
+                {
+                    StatusCode = (HttpStatusCode)422,
+                    ReasonPhrase = ex.Message
+                };
+
+                throw new HttpResponseException(httpError);
+            }
+        }
+
+        [HttpGet]
+        [Route("Editar")]
+        public EditarEspecieResponse Editar(EditarEspecieRequest request)
+        {
+            try
+            {
+                var response = new EditarEspecieResponse();
+                var bc = new EspecieComponent();
+                bc.Editar(request.Especie);
+
+                return response;
+            }
+            catch (Exception ex)
+            {
+                var httpError = new HttpResponseMessage()
+                {
+                    StatusCode = (HttpStatusCode)422,
+                    ReasonPhrase = ex.Message
+                };
+
+                throw new HttpResponseException(httpError);
+            }
+        }
+
+        [HttpGet]
+        [Route("Borrar")]
+        public BorrarEspecieResponse Borrar(BorrarEspecieRequest request)
+        {
+            try
+            {
+                var response = new BorrarEspecieResponse();
+                var bc = new EspecieComponent();
+                bc.Borrar(request.Especie);
+
+                return response;
+            }
+            catch (Exception ex)
+            {
+                var httpError = new HttpResponseMessage()
+                {
+                    StatusCode = (HttpStatusCode)422,
+                    ReasonPhrase = ex.Message
+                };
+
+                throw new HttpResponseException(httpError);
+            }
+        }
+
+        [HttpGet]
+        [Route("ListarPorId")]
+        public ListarEspecieResponse ListarPorId(ListarEspecieRequest request)
+        {
+            try
+            {
+                var response = new ListarEspecieResponse();
+                var bc = new EspecieComponent();
+                bc.ListarPorId(request.Especie.Id);
 
                 return response;
             }
